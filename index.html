@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flores Amarillas — Solecito 🌻</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lato:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+
+.screen{display:none;width:100%;min-height:100vh;position:relative;overflow:hidden;}
+.screen.active{display:flex;flex-direction:column;align-items:center;}
+
+/* ===== S1 INTRO ===== */
+#s1{background:linear-gradient(180deg,#fff8d0 0%,#ffea00 40%,#f5c800 70%,#e8a800 100%);justify-content:center;}
+.petals-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.petal-fall{position:absolute;top:-40px;font-size:var(--fs,20px);animation:fall var(--fd) linear infinite;animation-delay:var(--dl);opacity:.75;}
+@keyframes fall{0%{transform:translateY(0) rotate(0deg);opacity:.9;}100%{transform:translateY(105vh) rotate(400deg);opacity:0;}}
+.fi{position:absolute;animation:floatit var(--fd) ease-in-out infinite;animation-delay:var(--delay);user-select:none;font-size:var(--fs,22px);}
+@keyframes floatit{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-18px) rotate(5deg);}}
+.wc{position:relative;z-index:10;text-align:center;padding:1rem 1.5rem 0;}
+.badge{display:inline-block;background:rgba(255,255,255,.55);border:1px solid rgba(160,100,0,.35);border-radius:50px;padding:5px 22px;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:4px;color:#7a4a00;text-transform:uppercase;margin-bottom:.8rem;}
+.intro-title{font-family:'Dancing Script',cursive;font-size:56px;color:#5a3000;text-shadow:0 2px 18px rgba(200,140,0,.35);line-height:1.1;margin-bottom:.3rem;}
+.intro-sub{font-family:'Lato',sans-serif;font-weight:300;font-size:13px;color:#8a5500;letter-spacing:3px;text-transform:uppercase;margin-bottom:.8rem;}
+.divider{width:100px;height:1px;background:linear-gradient(90deg,transparent,#c87800,transparent);margin:.5rem auto 1rem;}
+.tree-wrap{position:relative;width:100%;max-width:420px;margin:0 auto;}
+.btn-next{background:linear-gradient(135deg,#c87800,#e8a800,#f5c800);color:#fff;border:none;border-radius:50px;padding:14px 46px;font-size:13px;font-family:'Lato',sans-serif;letter-spacing:3px;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 30px rgba(160,90,0,.4);transition:transform .2s,box-shadow .2s;margin-top:.6rem;text-shadow:0 1px 3px rgba(100,50,0,.4);}
+.btn-next:hover{transform:translateY(-4px) scale(1.05);}
+
+/* ===== S2 FLORERO ===== */
+#s2{background:linear-gradient(180deg,#fff9d6 0%,#fff0a0 25%,#ffe060 60%,#f5c800 100%);padding:1.5rem 1rem 3rem;}
+.s2inner{position:relative;z-index:10;width:100%;max-width:600px;}
+.s2title{font-family:'Dancing Script',cursive;font-size:42px;color:#5a3000;text-align:center;text-shadow:0 2px 10px rgba(180,100,0,.2);margin-bottom:.2rem;}
+.s2sub{font-family:'Lato',sans-serif;font-weight:300;font-size:12px;color:#8a5500;letter-spacing:3px;text-transform:uppercase;text-align:center;margin-bottom:.6rem;}
+.hint{font-family:'Lato',sans-serif;font-weight:300;font-size:13px;color:#7a4800;text-align:center;letter-spacing:1px;margin-bottom:.8rem;opacity:.85;}
+.hint span{display:inline-block;animation:bonce .9s ease-in-out infinite;}
+@keyframes bonce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+.vase-wrap{position:relative;width:100%;max-width:560px;margin:0 auto .8rem;}
+
+/* overlay carta */
+.overlay{position:fixed;inset:0;background:rgba(90,50,0,.6);display:none;align-items:center;justify-content:center;z-index:200;padding:1rem;}
+.overlay.open{display:flex;}
+.carta{background:linear-gradient(150deg,#fffbe8,#fff8d0,#ffedb0);border:2px solid rgba(180,120,0,.35);border-radius:24px;padding:2.2rem 1.8rem;max-width:380px;width:100%;text-align:center;position:relative;box-shadow:0 20px 60px rgba(100,60,0,.35),0 0 0 6px rgba(248,210,80,.25);}
+.carta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#c87800,#f5c800,#c87800,transparent);border-radius:24px 24px 0 0;}
+.carta-emoji{font-size:52px;display:block;margin-bottom:.5rem;animation:hbeat 1.5s ease-in-out infinite;}
+@keyframes hbeat{0%,100%{transform:scale(1);}40%{transform:scale(1.18);}60%{transform:scale(1);}}
+.carta-num{font-family:'Lato',sans-serif;font-size:11px;letter-spacing:3px;color:#c87800;text-transform:uppercase;margin-bottom:.3rem;}
+.carta-title{font-family:'Dancing Script',cursive;font-size:32px;color:#5a3000;margin-bottom:.7rem;}
+.carta-text{font-family:'Lato',sans-serif;font-weight:300;font-size:14px;color:#7a4a00;line-height:1.9;}
+.carta-text em{font-style:normal;color:#c87800;font-weight:400;}
+.carta-close{margin-top:1.3rem;background:linear-gradient(135deg,#c87800,#f5c800);color:#fff;border:none;border-radius:50px;padding:10px 32px;font-size:12px;font-family:'Lato',sans-serif;letter-spacing:2px;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 15px rgba(180,100,0,.35);}
+
+/* final */
+.final-msg{background:linear-gradient(135deg,rgba(255,255,255,.65),rgba(255,240,150,.6));border:1px solid rgba(180,120,0,.3);border-radius:20px;padding:1.6rem 1.4rem;text-align:center;margin-top:.3rem;}
+.final-t{font-family:'Dancing Script',cursive;font-size:32px;color:#5a3000;display:block;margin-bottom:.7rem;}
+.final-p{font-family:'Lato',sans-serif;font-weight:300;font-size:14px;color:#7a4800;line-height:1.9;}
+.final-p em{font-style:normal;color:#c87800;}
+.final-flowers{font-size:22px;letter-spacing:6px;margin-top:.8rem;display:block;animation:hbeat 2s ease-in-out infinite;}
+</style>
+</head>
+<body>
+
+<!-- OVERLAY CARTA -->
+<div class="overlay" id="overlay" onclick="closeCard(event)">
+  <div class="carta">
+    <span class="carta-emoji" id="c-emoji">🌻</span>
+    <p class="carta-num" id="c-num">Flor 1 de 7</p>
+    <h3 class="carta-title" id="c-title"></h3>
+    <p class="carta-text" id="c-text"></p>
+    <button class="carta-close" onclick="document.getElementById('overlay').classList.remove('open')">Cerrar 🌻</button>
+  </div>
+</div>
+
+<!-- PANTALLA 1: INTRO CON ÁRBOL -->
+<div id="s1" class="screen active">
+  <div class="petals-bg" id="petals1"></div>
+  <div class="fi" style="top:5%;left:3%;--fd:3.2s;--delay:0s;--fs:26px;">🌻</div>
+  <div class="fi" style="top:7%;left:80%;--fd:4s;--delay:.4s;--fs:24px;">🌼</div>
+  <div class="fi" style="top:20%;left:91%;--fd:3.5s;--delay:.9s;--fs:20px;">✨</div>
+  <div class="fi" style="top:60%;left:3%;--fd:4.2s;--delay:.3s;--fs:24px;">🌸</div>
+  <div class="fi" style="top:72%;left:87%;--fd:3.8s;--delay:.7s;--fs:22px;">🌻</div>
+  <div class="fi" style="top:82%;left:16%;--fd:3s;--delay:1.1s;--fs:18px;">💛</div>
+  <div class="fi" style="top:38%;left:1%;--fd:4.5s;--delay:.6s;--fs:20px;">🌼</div>
+  <div class="fi" style="top:88%;left:55%;--fd:4.1s;--delay:.8s;--fs:20px;">🌻</div>
+  <div class="wc">
+    <div class="badge">🌻 Día de las Flores Amarillas 🌻</div>
+    <h1 class="intro-title">Para ti,<br>Solecito</h1>
+    <p class="intro-sub">porque eres todo lo que florece en mí</p>
+    <div class="divider"></div>
+    <div class="tree-wrap">
+      <svg viewBox="0 0 420 360" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="210" cy="348" rx="90" ry="10" fill="#8B5E3C" opacity=".35"/>
+        <path d="M210 348 Q208 300 210 250 Q212 200 210 160" stroke="#8B5E3C" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <path d="M210 348 Q208 300 210 250 Q212 200 210 160" stroke="#a06a40" stroke-width="8" stroke-linecap="round" fill="none" opacity=".5"/>
+        <path d="M210 280 Q175 255 140 230" stroke="#8B5E3C" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M210 265 Q248 240 280 215" stroke="#8B5E3C" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M210 240 Q168 205 135 175" stroke="#8B5E3C" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M210 238 Q252 200 280 170" stroke="#8B5E3C" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M210 215 Q180 178 165 148" stroke="#8B5E3C" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+        <path d="M210 212 Q240 175 255 145" stroke="#8B5E3C" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+        <path d="M210 195 Q210 155 210 125" stroke="#8B5E3C" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <ellipse cx="172" cy="255" rx="16" ry="7" fill="#5a8a18" opacity=".75" transform="rotate(-38 172 255)"/>
+        <ellipse cx="248" cy="240" rx="16" ry="7" fill="#5a8a18" opacity=".75" transform="rotate(38 248 240)"/>
+        <ellipse cx="152" cy="210" rx="14" ry="6" fill="#6a9a22" opacity=".7" transform="rotate(-42 152 210)"/>
+        <ellipse cx="270" cy="196" rx="14" ry="6" fill="#6a9a22" opacity=".7" transform="rotate(42 270 196)"/>
+        <ellipse cx="177" cy="172" rx="12" ry="5" fill="#5a8a18" opacity=".65" transform="rotate(-35 177 172)"/>
+        <ellipse cx="244" cy="165" rx="12" ry="5" fill="#5a8a18" opacity=".65" transform="rotate(35 244 165)"/>
+        <g id="tree-flowers"></g>
+      </svg>
+    </div>
+    <button class="btn-next" onclick="goS2()">Ver las flores 🌻</button>
+  </div>
+</div>
+
+<!-- PANTALLA 2: FLORERO -->
+<div id="s2" class="screen">
+  <div class="petals-bg" id="petals2"></div>
+  <div class="s2inner">
+    <h2 class="s2title">🌻 El florero de Solecito</h2>
+    <p class="s2sub">✦ toca cada flor y abre su carta ✦</p>
+    <p class="hint"><span>👆</span> Cada flor guarda algo que siento por ti</p>
+
+    <div class="vase-wrap">
+      <svg id="vase-svg" viewBox="0 0 560 540" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="vaseg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#a06000"/>
+            <stop offset="30%" stop-color="#e8a800"/>
+            <stop offset="55%" stop-color="#f5c800"/>
+            <stop offset="80%" stop-color="#e8a800"/>
+            <stop offset="100%" stop-color="#8a5000"/>
+          </linearGradient>
+          <linearGradient id="neckG" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c87800"/>
+            <stop offset="50%" stop-color="#f5d040"/>
+            <stop offset="100%" stop-color="#c87800"/>
+          </linearGradient>
+          <linearGradient id="baseG" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#c87800"/>
+            <stop offset="100%" stop-color="#7a4800"/>
+          </linearGradient>
+          <linearGradient id="shineG" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="white" stop-opacity="0"/>
+            <stop offset="35%" stop-color="white" stop-opacity="0.22"/>
+            <stop offset="50%" stop-color="white" stop-opacity="0.35"/>
+            <stop offset="65%" stop-color="white" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="petalG" cx="40%" cy="40%">
+            <stop offset="0%" stop-color="#fff176"/>
+            <stop offset="60%" stop-color="#fdd835"/>
+            <stop offset="100%" stop-color="#f9a825"/>
+          </radialGradient>
+          <radialGradient id="petalG2" cx="40%" cy="40%">
+            <stop offset="0%" stop-color="#ffe082"/>
+            <stop offset="60%" stop-color="#ffca28"/>
+            <stop offset="100%" stop-color="#f57f17"/>
+          </radialGradient>
+          <radialGradient id="centerG" cx="40%" cy="35%">
+            <stop offset="0%" stop-color="#c8860a"/>
+            <stop offset="60%" stop-color="#8d5a00"/>
+            <stop offset="100%" stop-color="#5a3800"/>
+          </radialGradient>
+        </defs>
+
+        <!-- TALLOS -->
+        <path d="M280 318 Q279 270 280 210 Q281 165 280 130" stroke="#4a7a10" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M280 318 Q279 270 280 210 Q281 165 280 130" stroke="#6aaa20" stroke-width="2" stroke-linecap="round" fill="none" opacity=".5"/>
+        <path d="M278 295 Q245 260 200 215 Q170 185 155 155" stroke="#4a7a10" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M278 295 Q245 260 200 215 Q170 185 155 155" stroke="#6aaa20" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".4"/>
+        <path d="M282 290 Q315 255 360 210 Q390 182 405 152" stroke="#4a7a10" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <path d="M282 290 Q315 255 360 210 Q390 182 405 152" stroke="#6aaa20" stroke-width="1.5" stroke-linecap="round" fill="none" opacity=".4"/>
+        <path d="M278 305 Q238 278 195 255 Q165 238 135 218" stroke="#4a7a10" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <path d="M282 300 Q322 272 365 248 Q395 230 425 210" stroke="#4a7a10" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <path d="M277 310 Q248 292 218 278 Q195 267 175 255" stroke="#4a7a10" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M283 307 Q312 290 342 275 Q365 264 385 252" stroke="#4a7a10" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+        <!-- HOJAS -->
+        <ellipse cx="225" cy="240" rx="20" ry="8" fill="#5a9a18" opacity=".75" transform="rotate(-40 225 240)"/>
+        <ellipse cx="335" cy="232" rx="20" ry="8" fill="#5a9a18" opacity=".75" transform="rotate(40 335 232)"/>
+        <ellipse cx="175" cy="192" rx="17" ry="7" fill="#6aaa22" opacity=".7" transform="rotate(-45 175 192)"/>
+        <ellipse cx="385" cy="180" rx="17" ry="7" fill="#6aaa22" opacity=".7" transform="rotate(45 385 180)"/>
+        <ellipse cx="198" cy="280" rx="15" ry="6" fill="#5a9a18" opacity=".65" transform="rotate(-30 198 280)"/>
+        <ellipse cx="362" cy="272" rx="15" ry="6" fill="#5a9a18" opacity=".65" transform="rotate(30 362 272)"/>
+        <ellipse cx="248" cy="165" rx="14" ry="6" fill="#6aaa22" opacity=".65" transform="rotate(-50 248 165)"/>
+        <ellipse cx="315" cy="160" rx="14" ry="6" fill="#6aaa22" opacity=".65" transform="rotate(50 315 160)"/>
+
+        <!-- FLOR 1: centro top -->
+        <g class="vflor" onclick="openCard(0)" style="cursor:pointer;">
+          <circle cx="280" cy="115" r="44" fill="#fffde7" opacity=".1"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(0 280 115)"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(51.4 280 115)"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(102.8 280 115)"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(154.2 280 115)"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(205.7 280 115)"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(257.1 280 115)"/>
+          <ellipse cx="280" cy="78" rx="14" ry="22" fill="url(#petalG)" transform="rotate(308.5 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(25.7 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(77.1 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(128.5 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(180 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(231.4 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(282.8 280 115)"/>
+          <ellipse cx="280" cy="90" rx="9" ry="14" fill="url(#petalG2)" transform="rotate(334.2 280 115)"/>
+          <circle cx="280" cy="115" r="20" fill="url(#centerG)"/>
+          <circle cx="280" cy="115" r="20" fill="none" stroke="#f5c800" stroke-width="1.5" opacity=".5"/>
+          <circle cx="274" cy="109" r="2.5" fill="#f5c800" opacity=".6"/>
+          <circle cx="284" cy="108" r="2" fill="#f5c800" opacity=".5"/>
+          <circle cx="279" cy="118" r="2" fill="#f5c800" opacity=".5"/>
+          <circle cx="270" cy="116" r="1.8" fill="#f5c800" opacity=".45"/>
+          <circle cx="289" cy="117" r="1.8" fill="#f5c800" opacity=".45"/>
+        </g>
+
+        <!-- FLOR 2: izq alta -->
+        <g class="vflor" onclick="openCard(1)" style="cursor:pointer;">
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(0 155 138) translate(0,-26)"/>
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(51.4 155 138) translate(0,-26) rotate(-51.4 155 138)"/>
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(102.8 155 138) translate(0,-26) rotate(-102.8 155 138)"/>
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(154.2 155 138) translate(0,-26) rotate(-154.2 155 138)"/>
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(205.7 155 138) translate(0,-26) rotate(-205.7 155 138)"/>
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(257.1 155 138) translate(0,-26) rotate(-257.1 155 138)"/>
+          <ellipse cx="155" cy="138" rx="12" ry="20" fill="url(#petalG)" transform="rotate(308.5 155 138) translate(0,-26) rotate(-308.5 155 138)"/>
+          <circle cx="155" cy="138" r="16" fill="url(#centerG)"/>
+          <circle cx="155" cy="138" r="16" fill="none" stroke="#f5c800" stroke-width="1" opacity=".5"/>
+          <circle cx="150" cy="133" r="2" fill="#f5c800" opacity=".55"/>
+          <circle cx="159" cy="132" r="1.7" fill="#f5c800" opacity=".5"/>
+          <circle cx="154" cy="141" r="1.7" fill="#f5c800" opacity=".5"/>
+        </g>
+
+        <!-- FLOR 3: der alta -->
+        <g class="vflor" onclick="openCard(2)" style="cursor:pointer;">
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(0 405 128) translate(0,-26)"/>
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(51.4 405 128) translate(0,-26) rotate(-51.4 405 128)"/>
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(102.8 405 128) translate(0,-26) rotate(-102.8 405 128)"/>
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(154.2 405 128) translate(0,-26) rotate(-154.2 405 128)"/>
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(205.7 405 128) translate(0,-26) rotate(-205.7 405 128)"/>
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(257.1 405 128) translate(0,-26) rotate(-257.1 405 128)"/>
+          <ellipse cx="405" cy="128" rx="12" ry="20" fill="url(#petalG)" transform="rotate(308.5 405 128) translate(0,-26) rotate(-308.5 405 128)"/>
+          <circle cx="405" cy="128" r="16" fill="url(#centerG)"/>
+          <circle cx="405" cy="128" r="16" fill="none" stroke="#f5c800" stroke-width="1" opacity=".5"/>
+          <circle cx="400" cy="123" r="2" fill="#f5c800" opacity=".55"/>
+          <circle cx="409" cy="122" r="1.7" fill="#f5c800" opacity=".5"/>
+          <circle cx="404" cy="131" r="1.7" fill="#f5c800" opacity=".5"/>
+        </g>
+
+        <!-- FLOR 4: izq media -->
+        <g class="vflor" onclick="openCard(3)" style="cursor:pointer;">
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(0 135 205) translate(0,-24)"/>
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(51.4 135 205) translate(0,-24) rotate(-51.4 135 205)"/>
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(102.8 135 205) translate(0,-24) rotate(-102.8 135 205)"/>
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(154.2 135 205) translate(0,-24) rotate(-154.2 135 205)"/>
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(205.7 135 205) translate(0,-24) rotate(-205.7 135 205)"/>
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(257.1 135 205) translate(0,-24) rotate(-257.1 135 205)"/>
+          <ellipse cx="135" cy="205" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(308.5 135 205) translate(0,-24) rotate(-308.5 135 205)"/>
+          <circle cx="135" cy="205" r="14" fill="url(#centerG)"/>
+          <circle cx="135" cy="205" r="14" fill="none" stroke="#f5c800" stroke-width="1" opacity=".5"/>
+          <circle cx="131" cy="201" r="1.8" fill="#f5c800" opacity=".55"/>
+          <circle cx="138" cy="200" r="1.5" fill="#f5c800" opacity=".5"/>
+          <circle cx="134" cy="208" r="1.5" fill="#f5c800" opacity=".5"/>
+        </g>
+
+        <!-- FLOR 5: der media -->
+        <g class="vflor" onclick="openCard(4)" style="cursor:pointer;">
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(0 425 197) translate(0,-24)"/>
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(51.4 425 197) translate(0,-24) rotate(-51.4 425 197)"/>
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(102.8 425 197) translate(0,-24) rotate(-102.8 425 197)"/>
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(154.2 425 197) translate(0,-24) rotate(-154.2 425 197)"/>
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(205.7 425 197) translate(0,-24) rotate(-205.7 425 197)"/>
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(257.1 425 197) translate(0,-24) rotate(-257.1 425 197)"/>
+          <ellipse cx="425" cy="197" rx="11" ry="18" fill="url(#petalG2)" transform="rotate(308.5 425 197) translate(0,-24) rotate(-308.5 425 197)"/>
+          <circle cx="425" cy="197" r="14" fill="url(#centerG)"/>
+          <circle cx="425" cy="197" r="14" fill="none" stroke="#f5c800" stroke-width="1" opacity=".5"/>
+          <circle cx="421" cy="193" r="1.8" fill="#f5c800" opacity=".55"/>
+          <circle cx="428" cy="192" r="1.5" fill="#f5c800" opacity=".5"/>
+          <circle cx="424" cy="200" r="1.5" fill="#f5c800" opacity=".5"/>
+        </g>
+
+        <!-- FLOR 6: izq baja -->
+        <g class="vflor" onclick="openCard(5)" style="cursor:pointer;">
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(0 175 248) translate(0,-22)"/>
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(51.4 175 248) translate(0,-22) rotate(-51.4 175 248)"/>
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(102.8 175 248) translate(0,-22) rotate(-102.8 175 248)"/>
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(154.2 175 248) translate(0,-22) rotate(-154.2 175 248)"/>
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(205.7 175 248) translate(0,-22) rotate(-205.7 175 248)"/>
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(257.1 175 248) translate(0,-22) rotate(-257.1 175 248)"/>
+          <ellipse cx="175" cy="248" rx="10" ry="16" fill="url(#petalG)" transform="rotate(308.5 175 248) translate(0,-22) rotate(-308.5 175 248)"/>
+          <circle cx="175" cy="248" r="12" fill="url(#centerG)"/>
+          <circle cx="175" cy="248" r="12" fill="none" stroke="#f5c800" stroke-width="1" opacity=".5"/>
+          <circle cx="172" cy="245" r="1.6" fill="#f5c800" opacity=".55"/>
+          <circle cx="178" cy="244" r="1.4" fill="#f5c800" opacity=".5"/>
+        </g>
+
+        <!-- FLOR 7: der baja -->
+        <g class="vflor" onclick="openCard(6)" style="cursor:pointer;">
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(0 385 240) translate(0,-22)"/>
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(51.4 385 240) translate(0,-22) rotate(-51.4 385 240)"/>
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(102.8 385 240) translate(0,-22) rotate(-102.8 385 240)"/>
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(154.2 385 240) translate(0,-22) rotate(-154.2 385 240)"/>
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(205.7 385 240) translate(0,-22) rotate(-205.7 385 240)"/>
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(257.1 385 240) translate(0,-22) rotate(-257.1 385 240)"/>
+          <ellipse cx="385" cy="240" rx="10" ry="16" fill="url(#petalG)" transform="rotate(308.5 385 240) translate(0,-22) rotate(-308.5 385 240)"/>
+          <circle cx="385" cy="240" r="12" fill="url(#centerG)"/>
+          <circle cx="385" cy="240" r="12" fill="none" stroke="#f5c800" stroke-width="1" opacity=".5"/>
+          <circle cx="382" cy="237" r="1.6" fill="#f5c800" opacity=".55"/>
+          <circle cx="388" cy="236" r="1.4" fill="#f5c800" opacity=".5"/>
+        </g>
+
+        <!-- FLORERO DECORADO -->
+        <ellipse cx="280" cy="535" rx="90" ry="8" fill="#8a5000" opacity=".25"/>
+        <path d="M175 328 Q162 370 160 400 Q158 430 162 460 Q166 490 175 510 Q190 528 210 532 L350 532 Q370 528 385 510 Q394 490 398 460 Q402 430 400 400 Q398 370 385 328 Z" fill="url(#vaseg)"/>
+        <path d="M185 335 Q174 375 173 408 Q172 440 176 468 Q180 492 190 512 L215 528 Q195 510 188 488 Q182 462 182 432 Q182 400 186 368 Z" fill="url(#shineG)" opacity=".6"/>
+        <path d="M175 328 Q185 318 200 314 L360 314 Q375 318 385 328 Z" fill="url(#neckG)"/>
+        <ellipse cx="280" cy="314" rx="82" ry="10" fill="#f5d040"/>
+        <ellipse cx="280" cy="314" rx="82" ry="10" fill="none" stroke="#c87800" stroke-width="1.5"/>
+        <path d="M170 355 Q280 345 390 355" stroke="#f5c800" stroke-width="2.5" fill="none" opacity=".7"/>
+        <path d="M169 360 Q280 350 391 360" stroke="#fff8d0" stroke-width="1" fill="none" opacity=".5"/>
+        <path d="M200 380 L220 365 L240 380 L220 395 Z" fill="none" stroke="#f5c800" stroke-width="1.2" opacity=".5"/>
+        <path d="M240 380 L260 365 L280 380 L260 395 Z" fill="none" stroke="#f5c800" stroke-width="1.2" opacity=".5"/>
+        <path d="M280 380 L300 365 L320 380 L300 395 Z" fill="none" stroke="#f5c800" stroke-width="1.2" opacity=".5"/>
+        <path d="M320 380 L340 365 L360 380 L340 395 Z" fill="none" stroke="#f5c800" stroke-width="1.2" opacity=".5"/>
+        <circle cx="220" cy="380" r="5" fill="#f5c800" opacity=".6"/>
+        <circle cx="260" cy="380" r="5" fill="#f5c800" opacity=".6"/>
+        <circle cx="300" cy="380" r="5" fill="#f5c800" opacity=".6"/>
+        <circle cx="340" cy="380" r="5" fill="#f5c800" opacity=".6"/>
+        <path d="M165 415 Q280 405 395 415" stroke="#c87800" stroke-width="1.5" fill="none" opacity=".5"/>
+        <circle cx="280" cy="450" r="22" fill="none" stroke="#f5c800" stroke-width="1.5" opacity=".45"/>
+        <circle cx="280" cy="450" r="14" fill="none" stroke="#f5c800" stroke-width="1" opacity=".35"/>
+        <circle cx="280" cy="450" r="7" fill="#f5c800" opacity=".3"/>
+        <line x1="280" y1="422" x2="280" y2="414" stroke="#f5c800" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+        <line x1="280" y1="478" x2="280" y2="486" stroke="#f5c800" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+        <line x1="252" y1="450" x2="244" y2="450" stroke="#f5c800" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+        <line x1="308" y1="450" x2="316" y2="450" stroke="#f5c800" stroke-width="1.5" opacity=".4" stroke-linecap="round"/>
+        <line x1="260" y1="430" x2="254" y2="424" stroke="#f5c800" stroke-width="1.2" opacity=".35" stroke-linecap="round"/>
+        <line x1="300" y1="430" x2="306" y2="424" stroke="#f5c800" stroke-width="1.2" opacity=".35" stroke-linecap="round"/>
+        <line x1="260" y1="470" x2="254" y2="476" stroke="#f5c800" stroke-width="1.2" opacity=".35" stroke-linecap="round"/>
+        <line x1="300" y1="470" x2="306" y2="476" stroke="#f5c800" stroke-width="1.2" opacity=".35" stroke-linecap="round"/>
+        <path d="M168 490 Q280 480 392 490" stroke="#f5c800" stroke-width="2" fill="none" opacity=".55"/>
+        <path d="M175 510 Q190 528 210 532 L350 532 Q370 528 385 510 Z" fill="url(#baseG)"/>
+        <path d="M175 510 Q190 528 210 532 L350 532 Q370 528 385 510 Z" fill="url(#shineG)" opacity=".3"/>
+        <ellipse cx="280" cy="532" rx="72" ry="7" fill="#7a4800"/>
+        <ellipse cx="280" cy="532" rx="72" ry="7" fill="none" stroke="#c87800" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div class="final-msg">
+      <span class="final-t">Feliz Día de las Flores, Solecito 🌻</span>
+      <p class="final-p">
+        Cada flor que tocaste guarda un pedacito de lo que siento.<br>
+        Y así como estas flores no se marchitan,<br>
+        <em>lo que siento por ti tampoco lo hace.</em><br><br>
+        Hoy, mañana y siempre — <em>eres mi flor más bonita.</em>
+      </p>
+      <span class="final-flowers">🌻 🌼 🌻 🌼 🌻</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const cards=[
+  {emoji:'🌻',num:'Flor 1 de 7',title:'Tu sonrisa',text:'Hay días que empiezan mal, grises y pesados. Pero entonces pienso en tu sonrisa y todo cambia. <em>Eres el sol que nadie me puede quitar.</em>'},
+  {emoji:'🌼',num:'Flor 2 de 7',title:'Tu voz',text:'Cuando me hablas, el mundo se detiene. Tu voz es la melodía que más quiero escuchar. <em>Podría oírte para siempre.</em>'},
+  {emoji:'🌸',num:'Flor 3 de 7',title:'Tu forma de ser',text:'Eres auténtica, única, irrepetible. No te parecerás nunca a nadie más y eso me vuelve loco. <em>Me enamoré de todo lo que te hace ser tú.</em>'},
+  {emoji:'💛',num:'Flor 4 de 7',title:'Tu ternura',text:'En los momentos más simples es cuando más te admiro. En cómo cuidas, en cómo sientes, en cómo amas. <em>Eres la persona más bonita que conozco, por dentro y por fuera.</em>'},
+  {emoji:'🌻',num:'Flor 5 de 7',title:'Tu fuerza',text:'Me has enseñado más de lo que crees. Tu fortaleza me inspira cada día a ser mejor. <em>Eres más valiente de lo que imaginas.</em>'},
+  {emoji:'✨',num:'Flor 6 de 7',title:'Tus detalles',text:'Me pierdo en los pequeños detalles que nadie más nota. Esas cositas tuyas que solo yo conozco. <em>Son el tesoro más grande que tengo.</em>'},
+  {emoji:'🌼',num:'Flor 7 de 7',title:'Tu amor',text:'Lo más grande que me has dado no es nada que se pueda tocar. Es saber que existes, que estás, que me elegiste. <em>Eso vale más que todo.</em>'}
+];
+
+function openCard(i){
+  const c=cards[i];
+  document.getElementById('c-emoji').textContent=c.emoji;
+  document.getElementById('c-num').textContent=c.num;
+  document.getElementById('c-title').textContent=c.title;
+  document.getElementById('c-text').innerHTML=c.text;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeCard(e){
+  if(e.target===document.getElementById('overlay'))
+    document.getElementById('overlay').classList.remove('open');
+}
+
+(function(){
+  const c=document.getElementById('petals1');
+  const em=['🌻','🌼','✨','🌸','💛'];
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');p.className='petal-fall';
+    p.textContent=em[Math.floor(Math.random()*em.length)];
+    p.style.cssText=`left:${Math.random()*100}%;--fs:${12+Math.random()*16}px;--fd:${4+Math.random()*5}s;--dl:${Math.random()*7}s;`;
+    c.appendChild(p);
+  }
+})();
+
+(function(){
+  const g=document.getElementById('tree-flowers');
+  const pos=[
+    {x:210,y:125,r:13},{x:175,y:158,r:11},{x:245,y:152,r:11},
+    {x:135,y:172,r:10},{x:278,y:167,r:10},{x:165,y:145,r:9},
+    {x:230,y:100,r:10},{x:120,y:230,r:9},{x:283,y:218,r:9},
+    {x:148,y:193,r:9},{x:265,y:188,r:9},{x:210,y:88,r:9},
+    {x:112,y:174,r:8},{x:288,y:168,r:8},{x:163,y:237,r:8},{x:258,y:231,r:8}
+  ];
+  pos.forEach(p=>{
+    const fg=document.createElementNS('http://www.w3.org/2000/svg','g');
+    for(let a=0;a<7;a++){
+      const ang=(a/7)*Math.PI*2;
+      const el=document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+      el.setAttribute('cx',p.x+Math.cos(ang)*p.r);
+      el.setAttribute('cy',p.y+Math.sin(ang)*p.r);
+      el.setAttribute('rx',p.r*.7);el.setAttribute('ry',p.r*.7);
+      el.setAttribute('fill',a%2===0?'#fdd835':'#ffca28');
+      el.setAttribute('opacity','.92');
+      fg.appendChild(el);
+    }
+    const cc=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    cc.setAttribute('cx',p.x);cc.setAttribute('cy',p.y);cc.setAttribute('r',p.r*.6);
+    cc.setAttribute('fill','#8d5a00');fg.appendChild(cc);
+    g.appendChild(fg);
+  });
+})();
+
+function goS2(){
+  document.getElementById('s1').classList.remove('active');
+  document.getElementById('s2').classList.add('active');
+  const c2=document.getElementById('petals2');
+  const em=['🌻','🌼','✨','💛','🌸'];
+  for(let i=0;i<16;i++){
+    const p=document.createElement('div');p.className='petal-fall';
+    p.textContent=em[Math.floor(Math.random()*em.length)];
+    p.style.cssText=`left:${Math.random()*100}%;--fs:${12+Math.random()*14}px;--fd:${5+Math.random()*5}s;--dl:${Math.random()*8}s;`;
+    c2.appendChild(p);
+  }
+  document.querySelectorAll('.vflor').forEach(f=>{
+    f.addEventListener('mouseenter',()=>{f.style.filter='brightness(1.2) drop-shadow(0 0 10px #f5c800)';f.style.transform='scale(1.08)';f.style.transition='transform .2s';});
+    f.addEventListener('mouseleave',()=>{f.style.filter='';f.style.transform='';});
+    f.addEventListener('touchstart',()=>{f.style.filter='brightness(1.2) drop-shadow(0 0 10px #f5c800)';},{passive:true});
+    f.addEventListener('touchend',()=>{f.style.filter='';},{passive:true});
+  });
+}
+</script>
+</body>
+</html>
